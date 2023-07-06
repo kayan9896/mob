@@ -2,12 +2,10 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 
 export default function App() {
-  const name = "my cool app";
+  const name = "CS 5220";
   return (
     <View style={styles.container}>
-      <Text>
-        Open up App.js to start working on your app! This is very fun!
-      </Text>
+      <Text>Open up App.js to start working on {name} app</Text>
       <StatusBar style="auto" />
     </View>
   );
