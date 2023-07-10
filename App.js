@@ -36,7 +36,7 @@ export default function App() {
         hideModal={hideModal}
       />
       {/* we need to receive the data from Input and store it in inputText */}
-      <Text>{inputText}</Text>
+      <Text style={styles.text}>{inputText}</Text>
       <StatusBar style="auto" />
     </View>
   );
@@ -49,8 +49,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  input: {
-    borderBottomWidth: 1,
-    width: 200,
+  text: {
+    color: "#a09",
   },
 });
