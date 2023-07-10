@@ -12,14 +12,19 @@ export default function Input({ changeTextCallBack }) {
   }
   return (
     <View>
-      <TextInput style={styles.input} onChangeText={storeText} />
+      <TextInput style={styles.input} onChangeText={storeText} value={text} />
       <Button
         title="Confirm"
         onPress={() => {
           changeTextCallBack(text);
         }}
       />
-      {/* <Text>Input</Text> */}
+      <Button
+        title="Cancel"
+        onPress={() => {
+          setText("");
+        }}
+      />
     </View>
   );
 }
