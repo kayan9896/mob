@@ -1,4 +1,11 @@
-import { View, Text, TextInput, StyleSheet, Button, Modal } from "react-native";
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  Button,
+  Modal,
+  Image,
+} from "react-native";
 import React, { useState } from "react";
 
 // receive a callback function as prop and call it when confirm is pressed
@@ -13,6 +20,13 @@ export default function Input({ changeTextCallBack, modalVisible, hideModal }) {
   return (
     <Modal visible={modalVisible} animationType="slide">
       <View style={styles.container}>
+        <Image
+          style={styles.image}
+          source={{
+            uri: "https://cdn-icons-png.flaticon.com/512/2617/2617812.png",
+          }}
+        />
+        <Image style={styles.image} source={require("../assets/goal.png")} />
         <TextInput style={styles.input} onChangeText={storeText} value={text} />
         <Button
           title="Confirm"
@@ -42,5 +56,9 @@ const styles = StyleSheet.create({
   input: {
     borderBottomWidth: 1,
     width: 200,
+  },
+  image: {
+    height: 100,
+    width: 100,
   },
 });
