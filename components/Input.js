@@ -1,31 +1,34 @@
-import { View, Text, TextInput, StyleSheet, Button } from "react-native";
+import { View, Text, TextInput, StyleSheet, Button, Modal } from "react-native";
 import React, { useState } from "react";
 
-// receive a callback function as prop and call it when the text changes
-export default function Input({ changeTextCallBack }) {
+// receive a callback function as prop and call it when confirm is pressed
+// receive a callback functiona as prop and call it when cancel is pressed
+export default function Input({ changeTextCallBack, modalVisible, hideModal }) {
   const [text, setText] = useState("");
 
   function storeText(changedText) {
-    console.log("changed in Input ", changedText);
     //store chagnedText in text state variable
     setText(changedText);
   }
   return (
-    <View>
-      <TextInput style={styles.input} onChangeText={storeText} value={text} />
-      <Button
-        title="Confirm"
-        onPress={() => {
-          changeTextCallBack(text);
-        }}
-      />
-      <Button
-        title="Cancel"
-        onPress={() => {
-          setText("");
-        }}
-      />
-    </View>
+    <Modal visible={modalVisible} animationType="slide">
+      <View style={styles.container}>
+        <TextInput style={styles.input} onChangeText={storeText} value={text} />
+        <Button
+          title="Confirm"
+          onPress={() => {
+            changeTextCallBack(text);
+          }}
+        />
+        <Button
+          title="Cancel"
+          onPress={() => {
+            setText("");
+            hideModal();
+          }}
+        />
+      </View>
+    </Modal>
   );
 }
 
