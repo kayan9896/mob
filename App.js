@@ -1,5 +1,12 @@
 import { StatusBar } from "expo-status-bar";
-import { Button, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import {
+  Button,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import Header from "./components/Header";
 import { useState } from "react";
 import Input from "./components/Input";
@@ -50,14 +57,16 @@ export default function App() {
       />
       {/* we need to receive the data from Input and store it in inputText */}
       <View style={styles.bottomContainer}>
-        {/* map each element of the goals array to <View><Text></Text></View>*/}
-        {goals.map((goalItem) => {
-          return (
-            <View key={goalItem.id} style={styles.textContainer}>
-              <Text style={styles.text}>{goalItem.text}</Text>
-            </View>
-          );
-        })}
+        <ScrollView contentContainerStyle={styles.scrollViewContent}>
+          {/* map each element of the goals array to <View><Text></Text></View>*/}
+          {goals.map((goalItem) => {
+            return (
+              <View key={goalItem.id} style={styles.textContainer}>
+                <Text style={styles.text}>{goalItem.text}</Text>
+              </View>
+            );
+          })}
+        </ScrollView>
       </View>
       <StatusBar style="auto" />
     </SafeAreaView>
@@ -77,6 +86,8 @@ const styles = StyleSheet.create({
   bottomContainer: {
     flex: 4,
     backgroundColor: "#dcd",
+  },
+  scrollViewContent: {
     alignItems: "center",
   },
   text: {
