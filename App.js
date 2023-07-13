@@ -11,6 +11,7 @@ import {
 import Header from "./components/Header";
 import { useState } from "react";
 import Input from "./components/Input";
+import GoalItem from "./components/GoalItem";
 
 export default function App() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -61,11 +62,7 @@ export default function App() {
           contentContainerStyle={styles.scrollViewContent}
           data={goals}
           renderItem={({ item }) => {
-            return (
-              <View style={styles.textContainer}>
-                <Text style={styles.text}>{item.text}</Text>
-              </View>
-            );
+            return <GoalItem goalData={item} />;
           }}
         />
         {/* <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -99,14 +96,5 @@ const styles = StyleSheet.create({
   },
   scrollViewContent: {
     alignItems: "center",
-  },
-  text: {
-    color: "#a09",
-    padding: 5,
-  },
-  textContainer: {
-    borderRadius: 5,
-    backgroundColor: "#999",
-    margin: 5,
   },
 });
