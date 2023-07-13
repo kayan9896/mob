@@ -50,9 +50,14 @@ export default function App() {
       />
       {/* we need to receive the data from Input and store it in inputText */}
       <View style={styles.bottomContainer}>
-        <View style={styles.textContainer}>
-          <Text style={styles.text}>{inputText}</Text>
-        </View>
+        {/* map each element of the goals array to <View><Text></Text></View>*/}
+        {goals.map((goalItem) => {
+          return (
+            <View key={goalItem.id} style={styles.textContainer}>
+              <Text style={styles.text}>{goalItem.text}</Text>
+            </View>
+          );
+        })}
       </View>
       <StatusBar style="auto" />
     </SafeAreaView>
