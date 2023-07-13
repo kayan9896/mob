@@ -7,6 +7,8 @@ import Input from "./components/Input";
 export default function App() {
   const [inputText, setInputText] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  const [goals, setGoals] = useState([]);
+
   const appName = "CS 5220";
   function hideModal() {
     setModalVisible(false);
@@ -14,7 +16,16 @@ export default function App() {
   // this function is called when the text input changes
   // inside it update the state variable inputText
   function handleChangeText(changedText) {
-    setInputText(changedText);
+    // setInputText(changedText);
+    //make an object {text:,id:}
+    const newGaol = { text: changedText, id: Math.random() };
+    // const newGoalsArray = [...goals, newGaol];
+    // setGoals(newGoalsArray);
+    //using updater function in setGoals to make sure we get the updated goals value
+    setGoals((prevGoals) => {
+      return [...prevGoals, newGaol];
+    });
+    // try adding this new object to goals array
     //also hide the modal
     hideModal();
   }
@@ -66,10 +77,10 @@ const styles = StyleSheet.create({
   text: {
     color: "#a09",
     padding: 5,
-    margin: 5,
   },
   textContainer: {
-    borderRadius: 10,
+    borderRadius: 5,
     backgroundColor: "#999",
+    margin: 5,
   },
 });

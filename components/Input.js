@@ -35,6 +35,7 @@ export default function Input({ changeTextCallBack, modalVisible, hideModal }) {
               title="Confirm"
               onPress={() => {
                 changeTextCallBack(text);
+                setText("");
               }}
             />
           </View>
