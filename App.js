@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import {
   Button,
+  FlatList,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -12,7 +13,6 @@ import { useState } from "react";
 import Input from "./components/Input";
 
 export default function App() {
-  const [inputText, setInputText] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [goals, setGoals] = useState([]);
 
@@ -57,8 +57,18 @@ export default function App() {
       />
       {/* we need to receive the data from Input and store it in inputText */}
       <View style={styles.bottomContainer}>
-        <ScrollView contentContainerStyle={styles.scrollViewContent}>
-          {/* map each element of the goals array to <View><Text></Text></View>*/}
+        <FlatList
+          contentContainerStyle={styles.scrollViewContent}
+          data={goals}
+          renderItem={({ item }) => {
+            return (
+              <View style={styles.textContainer}>
+                <Text style={styles.text}>{item.text}</Text>
+              </View>
+            );
+          }}
+        />
+        {/* <ScrollView contentContainerStyle={styles.scrollViewContent}>
           {goals.map((goalItem) => {
             return (
               <View key={goalItem.id} style={styles.textContainer}>
@@ -66,7 +76,7 @@ export default function App() {
               </View>
             );
           })}
-        </ScrollView>
+        </ScrollView> */}
       </View>
       <StatusBar style="auto" />
     </SafeAreaView>
