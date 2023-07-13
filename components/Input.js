@@ -28,19 +28,26 @@ export default function Input({ changeTextCallBack, modalVisible, hideModal }) {
         />
         <Image style={styles.image} source={require("../assets/goal.png")} />
         <TextInput style={styles.input} onChangeText={storeText} value={text} />
-        <Button
-          title="Confirm"
-          onPress={() => {
-            changeTextCallBack(text);
-          }}
-        />
-        <Button
-          title="Cancel"
-          onPress={() => {
-            setText("");
-            hideModal();
-          }}
-        />
+        <View style={styles.buttonsContainer}>
+          <View style={styles.button}>
+            <Button
+              disabled={!text}
+              title="Confirm"
+              onPress={() => {
+                changeTextCallBack(text);
+              }}
+            />
+          </View>
+          <View style={styles.button}>
+            <Button
+              title="Cancel"
+              onPress={() => {
+                setText("");
+                hideModal();
+              }}
+            />
+          </View>
+        </View>
       </View>
     </Modal>
   );
@@ -49,16 +56,25 @@ export default function Input({ changeTextCallBack, modalVisible, hideModal }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#ddd",
     alignItems: "center",
     justifyContent: "center",
   },
+  button: {
+    width: "30%",
+    marginHorizontal: 10,
+  },
   input: {
     borderBottomWidth: 1,
+    borderBottomColor: "purple",
     width: 200,
+    marginVertical: 15,
   },
   image: {
     height: 100,
     width: 100,
+  },
+  buttonsContainer: {
+    flexDirection: "row",
   },
 });
