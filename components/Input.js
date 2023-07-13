@@ -56,7 +56,7 @@ export default function Input({ changeTextCallBack, modalVisible, hideModal }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#ddd",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "purple",
     width: 200,
+    marginVertical: 15,
   },
   image: {
     height: 100,

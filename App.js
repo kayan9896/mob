@@ -39,7 +39,9 @@ export default function App() {
       />
       {/* we need to receive the data from Input and store it in inputText */}
       <View style={styles.bottomContainer}>
-        <Text style={styles.text}>{inputText}</Text>
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>{inputText}</Text>
+        </View>
       </View>
       <StatusBar style="auto" />
     </SafeAreaView>
@@ -50,7 +52,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "stretch",
     justifyContent: "center",
   },
   topContainer: {
@@ -60,8 +61,15 @@ const styles = StyleSheet.create({
   bottomContainer: {
     flex: 4,
     backgroundColor: "#dcd",
+    alignItems: "center",
   },
   text: {
     color: "#a09",
+    padding: 5,
+    margin: 5,
+  },
+  textContainer: {
+    borderRadius: 10,
+    backgroundColor: "#999",
   },
 });
