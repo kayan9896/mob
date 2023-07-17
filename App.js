@@ -37,7 +37,9 @@ export default function App() {
     //also hide the modal
     hideModal();
   }
-
+  function goalPressed(pressedId) {
+    console.log("goal pressed ", pressedId);
+  }
   function goalDeleted(deletedId) {
     // console.log("clicked ", deletedId);
     // use array.filter to remove the element that its id matched the deletedId
@@ -74,7 +76,13 @@ export default function App() {
           contentContainerStyle={styles.scrollViewContent}
           data={goals}
           renderItem={({ item }) => {
-            return <GoalItem goalData={item} deleteFunction={goalDeleted} />;
+            return (
+              <GoalItem
+                goalData={item}
+                deleteFunction={goalDeleted}
+                pressFunction={goalPressed}
+              />
+            );
           }}
         />
         {/* <ScrollView contentContainerStyle={styles.scrollViewContent}>

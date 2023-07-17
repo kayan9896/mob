@@ -1,15 +1,25 @@
-import { View, Text, StyleSheet, Button, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  Dimensions,
+  Pressable,
+} from "react-native";
 import React from "react";
 
-export default function GoalItem({ goalData, deleteFunction }) {
+export default function GoalItem({ goalData, deleteFunction, pressFunction }) {
   function goalDeleted() {
     deleteFunction(goalData.id);
   }
+
   return (
-    <View style={styles.textContainer}>
-      <Text style={styles.text}>{goalData.text}</Text>
-      <Button color="black" title="X" onPress={goalDeleted} />
-    </View>
+    <Pressable onPress={() => pressFunction(goalData.id)}>
+      <View style={styles.textContainer}>
+        <Text style={styles.text}>{goalData.text}</Text>
+        <Button color="black" title="X" onPress={goalDeleted} />
+      </View>
+    </Pressable>
   );
 }
 
