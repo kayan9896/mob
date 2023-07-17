@@ -18,7 +18,12 @@ export default function GoalItem({ goalData, deleteFunction, pressFunction }) {
       <Pressable
         onPress={() => pressFunction(goalData.id)}
         android_ripple={{ color: "blue" }}
-        style={styles.goalContainer}
+        style={({ pressed }) => {
+          return [
+            styles.goalContainer,
+            pressed && { backgroundColor: "#c0c", opacity: 0.5 },
+          ];
+        }}
       >
         <Text style={styles.text}>{goalData.text}</Text>
         <Button color="black" title="X" onPress={goalDeleted} />
