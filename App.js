@@ -38,6 +38,18 @@ export default function App() {
     hideModal();
   }
 
+  function goalDeleted(deletedId) {
+    // console.log("clicked ", deletedId);
+    // use array.filter to remove the element that its id matched the deletedId
+    // const newArray = goals.filter((goalItem) => {
+    //   return goalItem.id !== deletedId;
+    // });
+    setGoals((prevGoals) => {
+      return prevGoals.filter((goalItem) => {
+        return goalItem.id !== deletedId;
+      });
+    });
+  }
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
@@ -62,7 +74,7 @@ export default function App() {
           contentContainerStyle={styles.scrollViewContent}
           data={goals}
           renderItem={({ item }) => {
-            return <GoalItem goalData={item} />;
+            return <GoalItem goalData={item} deleteFunction={goalDeleted} />;
           }}
         />
         {/* <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -96,6 +108,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#dcd",
   },
   scrollViewContent: {
+    // this doesn't let the view to take % width
     alignItems: "center",
   },
 });
