@@ -14,12 +14,16 @@ export default function GoalItem({ goalData, deleteFunction, pressFunction }) {
   }
 
   return (
-    <Pressable onPress={() => pressFunction(goalData.id)}>
-      <View style={styles.textContainer}>
+    <View>
+      <Pressable
+        onPress={() => pressFunction(goalData.id)}
+        android_ripple={{ color: "blue" }}
+        style={styles.goalContainer}
+      >
         <Text style={styles.text}>{goalData.text}</Text>
         <Button color="black" title="X" onPress={goalDeleted} />
-      </View>
-    </Pressable>
+      </Pressable>
+    </View>
   );
 }
 
@@ -29,7 +33,7 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 25,
   },
-  textContainer: {
+  goalContainer: {
     borderRadius: 5,
     backgroundColor: "#999",
     margin: 5,
