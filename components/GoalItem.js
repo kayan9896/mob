@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import React from "react";
 import PressableButton from "./PressableButton";
+import { AntDesign } from "@expo/vector-icons";
 
 export default function GoalItem({ goalData, deleteFunction, pressFunction }) {
   function goalDeleted() {
@@ -30,7 +31,8 @@ export default function GoalItem({ goalData, deleteFunction, pressFunction }) {
           defaultStyle={styles.defaultDeleteButton}
           pressedStyle={styles.pressedDeleteButton}
         >
-          <Text>X</Text>
+          {/* <Text>X</Text> */}
+          <AntDesign name="delete" size={24} color="black" />
         </PressableButton>
       </Pressable>
     </View>
