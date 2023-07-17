@@ -1,12 +1,22 @@
 import { StatusBar } from "expo-status-bar";
-import { Button, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import {
+  Button,
+  FlatList,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import Header from "./components/Header";
 import { useState } from "react";
 import Input from "./components/Input";
+import GoalItem from "./components/GoalItem";
 
 export default function App() {
-  const [inputText, setInputText] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  const [goals, setGoals] = useState([]);
+
   const appName = "CS 5220";
   function hideModal() {
     setModalVisible(false);
@@ -14,11 +24,32 @@ export default function App() {
   // this function is called when the text input changes
   // inside it update the state variable inputText
   function handleChangeText(changedText) {
-    setInputText(changedText);
+    // setInputText(changedText);
+    //make an object {text:,id:}
+    const newGaol = { text: changedText, id: Math.random() };
+    // const newGoalsArray = [...goals, newGaol];
+    // setGoals(newGoalsArray);
+    //using updater function in setGoals to make sure we get the updated goals value
+    setGoals((prevGoals) => {
+      return [...prevGoals, newGaol];
+    });
+    // try adding this new object to goals array
     //also hide the modal
     hideModal();
   }
 
+  function goalDeleted(deletedId) {
+    // console.log("clicked ", deletedId);
+    // use array.filter to remove the element that its id matched the deletedId
+    // const newArray = goals.filter((goalItem) => {
+    //   return goalItem.id !== deletedId;
+    // });
+    setGoals((prevGoals) => {
+      return prevGoals.filter((goalItem) => {
+        return goalItem.id !== deletedId;
+      });
+    });
+  }
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
@@ -39,9 +70,22 @@ export default function App() {
       />
       {/* we need to receive the data from Input and store it in inputText */}
       <View style={styles.bottomContainer}>
-        <View style={styles.textContainer}>
-          <Text style={styles.text}>{inputText}</Text>
-        </View>
+        <FlatList
+          contentContainerStyle={styles.scrollViewContent}
+          data={goals}
+          renderItem={({ item }) => {
+            return <GoalItem goalData={item} deleteFunction={goalDeleted} />;
+          }}
+        />
+        {/* <ScrollView contentContainerStyle={styles.scrollViewContent}>
+          {goals.map((goalItem) => {
+            return (
+              <View key={goalItem.id} style={styles.textContainer}>
+                <Text style={styles.text}>{goalItem.text}</Text>
+              </View>
+            );
+          })}
+        </ScrollView> */}
       </View>
       <StatusBar style="auto" />
     </SafeAreaView>
@@ -57,19 +101,14 @@ const styles = StyleSheet.create({
   topContainer: {
     flex: 1,
     alignItems: "center",
+    justifyContent: "center",
   },
   bottomContainer: {
     flex: 4,
     backgroundColor: "#dcd",
+  },
+  scrollViewContent: {
+    // this doesn't let the view to take % width
     alignItems: "center",
-  },
-  text: {
-    color: "#a09",
-    padding: 5,
-    margin: 5,
-  },
-  textContainer: {
-    borderRadius: 10,
-    backgroundColor: "#999",
   },
 });
