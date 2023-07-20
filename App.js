@@ -4,6 +4,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import GoalDetails from "./components/GoalDetails";
 const Stack = createNativeStackNavigator();
+import { AntDesign } from "@expo/vector-icons";
+import PressableButton from "./components/PressableButton";
 
 export default function App() {
   return (
@@ -27,6 +29,16 @@ export default function App() {
           options={({ route }) => {
             return {
               title: route.params.pressedGoal.text,
+              headerRight: () => {
+                return (
+                  <PressableButton
+                    pressableFunction={() => console.log("icon pressed")}
+                  >
+                    {/* <Text>X</Text> */}
+                    <AntDesign name="warning" size={24} color="white" />
+                  </PressableButton>
+                );
+              },
             };
           }}
         />
