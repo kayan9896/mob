@@ -1,14 +1,40 @@
-import { View, Text, StyleSheet, Button, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  Dimensions,
+  Pressable,
+} from "react-native";
 import React from "react";
+import PressableButton from "./PressableButton";
+import { AntDesign } from "@expo/vector-icons";
 
-export default function GoalItem({ goalData, deleteFunction }) {
+export default function GoalItem({ goalData, deleteFunction, pressFunction }) {
   function goalDeleted() {
     deleteFunction(goalData.id);
   }
+
   return (
-    <View style={styles.textContainer}>
-      <Text style={styles.text}>{goalData.text}</Text>
-      <Button color="black" title="X" onPress={goalDeleted} />
+    <View>
+      <Pressable
+        onPress={() => pressFunction(goalData.id)}
+        android_ripple={{ color: "blue" }}
+        style={({ pressed }) => {
+          return [styles.goalContainer, pressed && styles.pressedStyle];
+        }}
+      >
+        <Text style={styles.text}>{goalData.text}</Text>
+        {/* <Button color="black" title="X" onPress={goalDeleted} /> */}
+        <PressableButton
+          pressableFunction={goalDeleted}
+          defaultStyle={styles.defaultDeleteButton}
+          pressedStyle={styles.pressedDeleteButton}
+        >
+          {/* <Text>X</Text> */}
+          <AntDesign name="delete" size={24} color="black" />
+        </PressableButton>
+      </Pressable>
     </View>
   );
 }
@@ -19,7 +45,7 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 25,
   },
-  textContainer: {
+  goalContainer: {
     borderRadius: 5,
     backgroundColor: "#999",
     margin: 5,
@@ -27,5 +53,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     // width: 280,
     // width: 0.8 * Dimensions.get("screen").width,
+  },
+  pressedStyle: { backgroundColor: "#c0c", opacity: 0.5 },
+  defaultDeleteButton: { backgroundColor: "#555", padding: 5 },
+  pressedDeleteButton: {
+    opacity: 0.5,
+    backgroundColor: "#505",
   },
 });

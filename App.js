@@ -12,6 +12,7 @@ import Header from "./components/Header";
 import { useState } from "react";
 import Input from "./components/Input";
 import GoalItem from "./components/GoalItem";
+import PressableButton from "./components/PressableButton";
 
 export default function App() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -37,7 +38,9 @@ export default function App() {
     //also hide the modal
     hideModal();
   }
-
+  function goalPressed(pressedId) {
+    console.log("goal pressed ", pressedId);
+  }
   function goalDeleted(deletedId) {
     // console.log("clicked ", deletedId);
     // use array.filter to remove the element that its id matched the deletedId
@@ -54,12 +57,21 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
         <Header name={appName} />
-        <Button
+        <PressableButton
+          pressableFunction={() => {
+            setModalVisible(true);
+          }}
+          defaultStyle={styles.addButtonDefault}
+          pressedStyle={styles.addButtonPressed}
+        >
+          <Text style={{ color: "white" }}>Add A Goal</Text>
+        </PressableButton>
+        {/* <Button
           title="Add A Goal"
           onPress={() => {
             setModalVisible(true);
           }}
-        />
+        /> */}
       </View>
       {/* prop name changeTextCallBack is arbitrary */}
       {/* pass hdidemodal as another prop to Input as a callback function */}
@@ -74,7 +86,13 @@ export default function App() {
           contentContainerStyle={styles.scrollViewContent}
           data={goals}
           renderItem={({ item }) => {
-            return <GoalItem goalData={item} deleteFunction={goalDeleted} />;
+            return (
+              <GoalItem
+                goalData={item}
+                deleteFunction={goalDeleted}
+                pressFunction={goalPressed}
+              />
+            );
           }}
         />
         {/* <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -101,7 +119,7 @@ const styles = StyleSheet.create({
   topContainer: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-evenly",
   },
   bottomContainer: {
     flex: 4,
@@ -110,5 +128,13 @@ const styles = StyleSheet.create({
   scrollViewContent: {
     // this doesn't let the view to take % width
     alignItems: "center",
+  },
+  addButtonDefault: {
+    backgroundColor: "green",
+    padding: 5,
+    borderRadius: 5,
+  },
+  addButtonPressed: {
+    opacity: 0.5,
   },
 });
