@@ -6,7 +6,7 @@ export default function GoalDetails({ route }) {
   return (
     <View>
       <Text>
-        This is the detils of goal with text {route.params.pressedGoal.text}
+        This is the detils of goal with id {route.params.pressedGoal.id}
       </Text>
     </View>
   );
