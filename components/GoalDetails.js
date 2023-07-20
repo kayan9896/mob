@@ -1,10 +1,13 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-export default function GoalDetails() {
+export default function GoalDetails({ route }) {
+  console.log(route.params.pressedGoal.text);
   return (
     <View>
-      <Text>GoalDetails</Text>
+      <Text>
+        This is the detils of goal with text {route.params.pressedGoal.text}
+      </Text>
     </View>
   );
 }

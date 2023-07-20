@@ -30,9 +30,9 @@ export default function Home({ navigation }) {
     //also hide the modal
     hideModal();
   }
-  function goalPressed(pressedId) {
-    console.log("goal pressed ", pressedId);
-    navigation.navigate("Goal Details");
+  function goalPressed(pressedGoal) {
+    console.log("goal pressed ", pressedGoal);
+    navigation.navigate("Goal Details", { pressedGoal });
   }
   function goalDeleted(deletedId) {
     // console.log("clicked ", deletedId);
