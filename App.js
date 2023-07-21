@@ -29,16 +29,6 @@ export default function App() {
           options={({ route }) => {
             return {
               title: route.params.pressedGoal.text,
-              headerRight: () => {
-                return (
-                  <PressableButton
-                    pressableFunction={() => console.log("icon pressed")}
-                  >
-                    {/* <Text>X</Text> */}
-                    <AntDesign name="warning" size={24} color="white" />
-                  </PressableButton>
-                );
-              },
             };
           }}
         />
