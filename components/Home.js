@@ -6,7 +6,7 @@ import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
 
-export default function Home() {
+export default function Home({ navigation}) {
   const [modalVisible, setModalVisible] = useState(false);
   const [goals, setGoals] = useState([]);
 
@@ -32,6 +32,7 @@ export default function Home() {
   }
   function goalPressed(pressedId) {
     console.log("goal pressed ", pressedId);
+    navigation.navigate("Goal Details",{titl:pressedId.text});
   }
   function goalDeleted(deletedId) {
     // console.log("clicked ", deletedId);
