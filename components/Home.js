@@ -5,6 +5,7 @@ import { useState } from "react";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
+import { writeToDB } from "../Firebase/firestoreHelper";
 
 export default function Home({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -20,6 +21,7 @@ export default function Home({ navigation }) {
     // setInputText(changedText);
     //make an object {text:,id:}
     const newGaol = { text: changedText, id: Math.random() };
+    writeToDB(newGaol);
     // const newGoalsArray = [...goals, newGaol];
     // setGoals(newGoalsArray);
     //using updater function in setGoals to make sure we get the updated goals value
