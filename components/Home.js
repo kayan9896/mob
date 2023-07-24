@@ -20,7 +20,7 @@ export default function Home({ navigation }) {
   function handleChangeText(changedText) {
     // setInputText(changedText);
     //make an object {text:,id:}
-    const newGaol = { text: changedText, id: Math.random() };
+    const newGaol = { text: changedText };
     writeToDB(newGaol);
     // const newGoalsArray = [...goals, newGaol];
     // setGoals(newGoalsArray);
