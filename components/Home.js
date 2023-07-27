@@ -1,15 +1,43 @@
 import { StatusBar } from "expo-status-bar";
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import Header from "./Header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
+import { deleteFromDB, writeToDB } from "../Firebase/firestoreHelper";
+import { collection, onSnapshot } from "firebase/firestore";
+import { database } from "../Firebase/firebase-setup";
 
 export default function Home({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [goals, setGoals] = useState([]);
-
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      collection(database, "goals"),
+      (querySnapshot) => {
+        if (!querySnapshot.empty) {
+          //querysnapshot.docs is an array, loop through it , call .data() on each element
+          //const newArray = []
+          // for (let item of querySnapshot.docs) {
+          //   console.log(item.data());
+          //   //update goals array
+          //   newArray.push(item.data());
+          // }
+          //setGoals(newArray)
+          const newGoals = querySnapshot.docs.map((item) => {
+            return { ...item.data(), id: item.id };
+          });
+          setGoals(newGoals);
+        } else {
+          setGoals([]);
+        }
+      }
+    );
+    return () => {
+      unsubscribe();
+    };
+  }, []);
   const appName = "CS 5220";
   function hideModal() {
     setModalVisible(false);
@@ -19,13 +47,14 @@ export default function Home({ navigation }) {
   function handleChangeText(changedText) {
     // setInputText(changedText);
     //make an object {text:,id:}
-    const newGaol = { text: changedText, id: Math.random() };
+    const newGaol = { text: changedText };
+    writeToDB(newGaol);
     // const newGoalsArray = [...goals, newGaol];
     // setGoals(newGoalsArray);
     //using updater function in setGoals to make sure we get the updated goals value
-    setGoals((prevGoals) => {
-      return [...prevGoals, newGaol];
-    });
+    // setGoals((prevGoals) => {
+    //   return [...prevGoals, newGaol];
+    // });
     // try adding this new object to goals array
     //also hide the modal
     hideModal();
@@ -34,17 +63,18 @@ export default function Home({ navigation }) {
     console.log("goal pressed ", pressedGoal);
     navigation.navigate("Goal Details", { pressedGoal });
   }
-  function goalDeleted(deletedId) {
+  async function goalDeleted(deletedId) {
     // console.log("clicked ", deletedId);
     // use array.filter to remove the element that its id matched the deletedId
     // const newArray = goals.filter((goalItem) => {
     //   return goalItem.id !== deletedId;
     // });
-    setGoals((prevGoals) => {
-      return prevGoals.filter((goalItem) => {
-        return goalItem.id !== deletedId;
-      });
-    });
+    // setGoals((prevGoals) => {
+    //   return prevGoals.filter((goalItem) => {
+    //     return goalItem.id !== deletedId;
+    //   });
+    // });
+    await deleteFromDB(deletedId);
   }
   return (
     <SafeAreaView style={styles.container}>
