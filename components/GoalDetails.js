@@ -2,6 +2,7 @@ import { View, Text } from "react-native";
 import React, { useEffect, useState } from "react";
 import PressableButton from "./PressableButton";
 import { AntDesign } from "@expo/vector-icons";
+import GoalUsers from "./GoalUsers";
 
 export default function GoalDetails({ route, navigation }) {
   const [warned, setWarned] = useState(false);
@@ -24,6 +25,7 @@ export default function GoalDetails({ route, navigation }) {
         This is the detils of goal with id {route.params.pressedGoal.id}
       </Text>
       {warned && <Text>Warned</Text>}
+      <GoalUsers />
     </View>
   );
 }
