@@ -44,10 +44,6 @@ export default function GoalUsers() {
       setUsers((prevUsers) => {
         return [...prevUsers, data.name];
       });
-      // const usersArray = data.map((item) => {
-      //   return item.name;
-      // });
-      // setUsers(usersArray);
     } catch (err) {
       // any of the promises above is rejected
       console.log("post new user  ", err);
