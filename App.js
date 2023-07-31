@@ -6,10 +6,10 @@ import GoalDetails from "./components/GoalDetails";
 const Stack = createNativeStackNavigator();
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./Firebase/firebase-setup";
 import Profile from "./components/Profile";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
 import PressableButton from "./components/PressableButton";
 
 export default function App() {
@@ -29,6 +29,7 @@ export default function App() {
   const AuthStack = (
     <>
       <Stack.Screen name="Login" component={Login} />
+
       <Stack.Screen name="Signup" component={Signup} />
     </>
   );
@@ -48,7 +49,6 @@ export default function App() {
                 <PressableButton
                   pressableFunction={() => navigation.navigate("Profile")}
                 >
-                  {/* <Text>X</Text> */}
                   <Ionicons name="person" size={24} color="black" />
                 </PressableButton>
               );
@@ -65,13 +65,25 @@ export default function App() {
           };
         }}
       />
-      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          title: "All My Goals",
+          headerRight: () => {
+            return (
+              <PressableButton pressableFunction={() => signOut(auth)}>
+                <AntDesign name="logout" size={24} color="black" />
+              </PressableButton>
+            );
+          },
+        }}
+      />
     </>
   );
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Signup"
         screenOptions={{
           headerStyle: { backgroundColor: "#a2a" },
           headerTintColor: "white",
