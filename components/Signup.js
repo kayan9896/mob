@@ -18,7 +18,12 @@ export default function Signup({ navigation }) {
       return;
     }
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const userCred = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      console.log(userCred);
     } catch (err) {
       if (err.code === "auth/weak-password") {
         Alert.alert("THe password is not strong enout");
