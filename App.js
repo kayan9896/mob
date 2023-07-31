@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Home from "./components/Home";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -10,6 +10,37 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 
 export default function App() {
+  const [isUserLoggedin, setIsUserLoggedIn] = useState(false);
+  //screens related for non authenticated users
+  const AuthStack = (
+    <>
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Signup" component={Signup} />
+    </>
+  );
+
+  //screens related for authenticated users
+
+  const AppStack = (
+    <>
+      <Stack.Screen
+        name="Homepage"
+        component={Home}
+        options={{
+          title: "All My Goals",
+        }}
+      />
+      <Stack.Screen
+        name="Goal Details"
+        component={GoalDetails}
+        options={({ route }) => {
+          return {
+            title: route.params.pressedGoal.text,
+          };
+        }}
+      />
+    </>
+  );
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -19,24 +50,8 @@ export default function App() {
           headerTintColor: "white",
         }}
       >
-        <Stack.Screen
-          name="Homepage"
-          component={Home}
-          options={{
-            title: "All My Goals",
-          }}
-        />
-        <Stack.Screen
-          name="Goal Details"
-          component={GoalDetails}
-          options={({ route }) => {
-            return {
-              title: route.params.pressedGoal.text,
-            };
-          }}
-        />
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Signup" component={Signup} />
+        {/* decide which stack to show */}
+        {isUserLoggedin ? AppStack : AuthStack}
       </Stack.Navigator>
     </NavigationContainer>
   );
