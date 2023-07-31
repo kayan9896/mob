@@ -8,6 +8,9 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./Firebase/firebase-setup";
+import Profile from "./components/Profile";
+import { Ionicons } from "@expo/vector-icons";
+import PressableButton from "./components/PressableButton";
 
 export default function App() {
   const [isUserLoggedin, setIsUserLoggedIn] = useState(false);
@@ -37,8 +40,20 @@ export default function App() {
       <Stack.Screen
         name="Homepage"
         component={Home}
-        options={{
-          title: "All My Goals",
+        options={({ navigation }) => {
+          return {
+            title: "All My Goals",
+            headerRight: () => {
+              return (
+                <PressableButton
+                  pressableFunction={() => navigation.navigate("Profile")}
+                >
+                  {/* <Text>X</Text> */}
+                  <Ionicons name="person" size={24} color="black" />
+                </PressableButton>
+              );
+            },
+          };
         }}
       />
       <Stack.Screen
@@ -50,6 +65,7 @@ export default function App() {
           };
         }}
       />
+      <Stack.Screen name="Profile" component={Profile} />
     </>
   );
   return (
