@@ -6,11 +6,14 @@ import GoalDetails from "./components/GoalDetails";
 const Stack = createNativeStackNavigator();
 import { AntDesign } from "@expo/vector-icons";
 import PressableButton from "./components/PressableButton";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
+        initialRouteName="Signup"
         screenOptions={{
           headerStyle: { backgroundColor: "#a2a" },
           headerTintColor: "white",
@@ -32,6 +35,8 @@ export default function App() {
             };
           }}
         />
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Signup" component={Signup} />
       </Stack.Navigator>
     </NavigationContainer>
   );
