@@ -18,6 +18,9 @@ export default function App() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       //the callback will be called on any authentication changes
+      //deleting the user doesn't call this callback - this is by design
+      //https://stackoverflow.com/questions/35960546/firebase-still-retrieving-authdata-after-deletion/35961217#35961217
+
       if (user) {
         setIsUserLoggedIn(true);
       } else {
@@ -72,7 +75,15 @@ export default function App() {
           title: "All My Goals",
           headerRight: () => {
             return (
-              <PressableButton pressableFunction={() => signOut(auth)}>
+              <PressableButton
+                pressableFunction={async () => {
+                  try {
+                    await signOut(auth);
+                  } catch (err) {
+                    console.log("logout ", err);
+                  }
+                }}
+              >
                 <AntDesign name="logout" size={24} color="black" />
               </PressableButton>
             );
