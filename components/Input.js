@@ -13,7 +13,10 @@ import ImageManager from "./ImageManager";
 // receive a callback functiona as prop and call it when cancel is pressed
 export default function Input({ changeTextCallBack, modalVisible, hideModal }) {
   const [text, setText] = useState("");
-
+  const [imageUri, setImageUri] = useState("");
+  function storeImageUri(capturedUri) {
+    setImageUri(capturedUri);
+  }
   function storeText(changedText) {
     //store chagnedText in text state variable
     setText(changedText);
@@ -29,14 +32,16 @@ export default function Input({ changeTextCallBack, modalVisible, hideModal }) {
         />
         <Image style={styles.image} source={require("../assets/goal.png")} />
         <TextInput style={styles.input} onChangeText={storeText} value={text} />
-        <ImageManager />
+        <ImageManager storeImageUri={storeImageUri} />
         <View style={styles.buttonsContainer}>
           <View style={styles.button}>
             <Button
               disabled={!text}
               title="Confirm"
               onPress={() => {
-                changeTextCallBack(text);
+                changeTextCallBack({ text, imageUri });
+                // same as changeTextCallBack({ "text":text, "iamgeUri":imageUri });
+
                 setText("");
               }}
             />

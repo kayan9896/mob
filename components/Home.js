@@ -52,10 +52,11 @@ export default function Home({ navigation }) {
   }
   // this function is called when the text input changes
   // inside it update the state variable inputText
-  function handleChangeText(changedText) {
+  function handleChangeText(data) {
+    console.log(data);
     // setInputText(changedText);
     //make an object {text:,id:}
-    const newGaol = { text: changedText };
+    const newGaol = { text: data.text };
     writeToDB(newGaol);
     // const newGoalsArray = [...goals, newGaol];
     // setGoals(newGoalsArray);

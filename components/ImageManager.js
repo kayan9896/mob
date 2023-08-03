@@ -2,7 +2,7 @@ import { View, Button, Alert, Image, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 
-export default function ImageManager() {
+export default function ImageManager({ storeImageUri }) {
   const [permissionInfo, requestPermission] =
     ImagePicker.useCameraPermissions();
   const [imageUri, setImageUri] = useState("");
@@ -31,6 +31,7 @@ export default function ImageManager() {
       });
       if (!result.canceled) {
         setImageUri(result.assets[0].uri);
+        storeImageUri(result.assets[0].uri);
       }
     } catch (err) {
       console.log("launch camera ", err);
