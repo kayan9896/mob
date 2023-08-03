@@ -7,6 +7,7 @@ import {
   Image,
 } from "react-native";
 import React, { useState } from "react";
+import ImageManager from "./ImageManager";
 
 // receive a callback function as prop and call it when confirm is pressed
 // receive a callback functiona as prop and call it when cancel is pressed
@@ -28,6 +29,7 @@ export default function Input({ changeTextCallBack, modalVisible, hideModal }) {
         />
         <Image style={styles.image} source={require("../assets/goal.png")} />
         <TextInput style={styles.input} onChangeText={storeText} value={text} />
+        <ImageManager />
         <View style={styles.buttonsContainer}>
           <View style={styles.button}>
             <Button
