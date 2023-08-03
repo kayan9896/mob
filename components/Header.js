@@ -8,7 +8,6 @@ const windowHeight = Dimensions.get("window").height;
 
 export default function Header({ name }) {
   const { height, width } = useWindowDimensions();
-  console.log(height);
   const paddingVerticalDynamic = height < 450 ? 0 : 5;
   return (
     <View>
