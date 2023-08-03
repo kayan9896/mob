@@ -6,15 +6,19 @@ import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
 import { deleteFromDB, writeToDB } from "../Firebase/firestoreHelper";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { database } from "../Firebase/firebase-setup";
-
+import { auth } from "../Firebase/firebase-setup";
 export default function Home({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [goals, setGoals] = useState([]);
   useEffect(() => {
-    const unsubscribe = onSnapshot(
+    const q = query(
       collection(database, "goals"),
+      where("user", "==", auth.currentUser.uid)
+    );
+    const unsubscribe = onSnapshot(
+      q,
       (querySnapshot) => {
         if (!querySnapshot.empty) {
           //querysnapshot.docs is an array, loop through it , call .data() on each element
@@ -32,6 +36,10 @@ export default function Home({ navigation }) {
         } else {
           setGoals([]);
         }
+      },
+
+      (error) => {
+        console.log("onshanpshot ", error);
       }
     );
     return () => {
