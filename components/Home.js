@@ -7,8 +7,9 @@ import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
 import { deleteFromDB, writeToDB } from "../Firebase/firestoreHelper";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
-import { database } from "../Firebase/firebase-setup";
+import { database, storage } from "../Firebase/firebase-setup";
 import { auth } from "../Firebase/firebase-setup";
+import { ref, uploadBytesResumable } from "firebase/storage";
 export default function Home({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [goals, setGoals] = useState([]);
@@ -50,10 +51,23 @@ export default function Home({ navigation }) {
   function hideModal() {
     setModalVisible(false);
   }
+  async function getImageData(uri) {
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    return blob;
+  }
   // this function is called when the text input changes
   // inside it update the state variable inputText
-  function handleChangeText(data) {
-    console.log(data);
+  async function handleChangeText(data) {
+    const uri = data.imageUri;
+    if (uri) {
+      const imageBlob = await getImageData(uri);
+      const imageName = uri.substring(uri.lastIndexOf("/") + 1);
+      const imageRef = await ref(storage, `images/${imageName}`);
+      const uploadResult = await uploadBytesResumable(imageRef, imageBlob);
+      console.log(uploadResult.metadata.fullPath);
+    }
+
     // setInputText(changedText);
     //make an object {text:,id:}
     const newGaol = { text: data.text };
