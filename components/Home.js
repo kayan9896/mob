@@ -59,28 +59,37 @@ export default function Home({ navigation }) {
   // this function is called when the text input changes
   // inside it update the state variable inputText
   async function handleChangeText(data) {
-    const uri = data.imageUri;
-    if (uri) {
-      const imageBlob = await getImageData(uri);
-      const imageName = uri.substring(uri.lastIndexOf("/") + 1);
-      const imageRef = await ref(storage, `images/${imageName}`);
-      const uploadResult = await uploadBytesResumable(imageRef, imageBlob);
-      console.log(uploadResult.metadata.fullPath);
-    }
+    try {
+      const uri = data.imageUri;
+      let storageUri = "";
+      if (uri) {
+        const imageBlob = await getImageData(uri);
+        const imageName = uri.substring(uri.lastIndexOf("/") + 1);
+        const imageRef = await ref(storage, `images/${imageName}`);
+        const uploadResult = await uploadBytesResumable(imageRef, imageBlob);
+        storageUri = uploadResult.metadata.fullPath;
+      }
 
-    // setInputText(changedText);
-    //make an object {text:,id:}
-    const newGaol = { text: data.text };
-    writeToDB(newGaol);
-    // const newGoalsArray = [...goals, newGaol];
-    // setGoals(newGoalsArray);
-    //using updater function in setGoals to make sure we get the updated goals value
-    // setGoals((prevGoals) => {
-    //   return [...prevGoals, newGaol];
-    // });
-    // try adding this new object to goals array
-    //also hide the modal
-    hideModal();
+      // setInputText(changedText);
+      //make an object {text:,id:}
+      let newGaol = { text: data.text };
+
+      if (storageUri) {
+        newGaol = { ...newGaol, imageUri: storageUri };
+      }
+      writeToDB(newGaol);
+      // const newGoalsArray = [...goals, newGaol];
+      // setGoals(newGoalsArray);
+      //using updater function in setGoals to make sure we get the updated goals value
+      // setGoals((prevGoals) => {
+      //   return [...prevGoals, newGaol];
+      // });
+      // try adding this new object to goals array
+      //also hide the modal
+      hideModal();
+    } catch (err) {
+      console.log("receive goal data ", err);
+    }
   }
   function goalPressed(pressedGoal) {
     console.log("goal pressed ", pressedGoal);
