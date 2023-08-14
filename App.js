@@ -11,6 +11,7 @@ import { auth } from "./Firebase/firebase-setup";
 import Profile from "./components/Profile";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import PressableButton from "./components/PressableButton";
+import Map from "./components/Map";
 
 export default function App() {
   const [isUserLoggedin, setIsUserLoggedIn] = useState(false);
@@ -102,6 +103,7 @@ export default function App() {
       >
         {/* decide which stack to show */}
         {isUserLoggedin ? AppStack : AuthStack}
+        <Stack.Screen name="map" component={Map}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
